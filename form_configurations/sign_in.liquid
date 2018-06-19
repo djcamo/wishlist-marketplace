@@ -1,0 +1,14 @@
+---
+name: sign_in
+resource: Session
+redirect_to: /account
+---
+{% form %}
+  <div class="form-group">
+  {% input_field 'email', class: "form-control" %}
+  </div>
+  <div class="form-group">
+  {% input_field 'password', class: "form-control" %}
+  </div>
+  {% submit 'Log In', class: "btn btn-primary" %}
+{% endform %}

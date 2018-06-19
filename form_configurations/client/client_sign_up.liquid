@@ -1,0 +1,38 @@
+---
+name: client_sign_up
+resource: User
+redirect_to: /sign-in
+configuration:
+  email:
+  password:
+  first_name:
+    validation:
+      presence: true
+  profiles:
+    client:
+      enabled:
+        property_options:
+          default: true
+          readonly: true
+      validation:
+        presence: true
+    validation:
+      presence: true
+---
+
+{% form url: '/api/users', method: 'post' %}
+  <label>Name:</label>
+  {% input_field 'first_name', class: "form-control" %}
+  <label>Email:</label>
+  {% input_field 'email', class: "form-control" %}
+  <label>Password:</label>
+  {% input_field 'password', as: 'password', class: "form-control" %}
+
+  {% fields_for 'profiles' %}
+    {% fields_for 'client', form: 'profiles' %}
+      {% input 'enabled', as: 'hidden', form: 'client' %}
+    {% endfields_for %}
+  {% endfields_for %}
+  <br>
+  {% submit 'Create' class: "btn btn-primary" %}
+{% endform %}

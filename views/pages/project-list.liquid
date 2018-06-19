@@ -1,0 +1,27 @@
+---
+slug: project-list
+layout_name: application
+---
+
+{% query_graph 'list_projects', result_name: g %}
+
+<div class="container">
+    <div class="row">
+    
+        {% for project in g.projects.results %}
+            <div class="col-sm-6">
+            <div class="card" style="margin-bottom:25px">
+                <img class="card-img-top" src="http://via.placeholder.com/350x150" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.name }}</h5>
+                    <p class="card-text">{{ project.description }}.</p>
+                    <p>Budget: ${{project.budget}}
+                    <p>Deadline: {{project.deadline}}
+                </div>
+                </div>
+             </div>
+            
+        {% endfor %}
+
+    </div>
+<div>

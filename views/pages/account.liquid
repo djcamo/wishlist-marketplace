@@ -1,0 +1,52 @@
+---
+slug: account
+layout_name: application
+
+---
+
+{% query_graph 'current_user', result_name: g -%}
+{% assign me = g.current_user -%}
+
+<div class="container">
+ 
+  <div class="row">
+    <div class="col-lg-12">
+    <h1>Account Details</h1>
+    <h4>Hello {{me.first_name}}  - <a href="edit-user/{{me.id}}">{{me.id}}</a></h4>
+    <p><a href="/sign-out">Logout</a></p>
+
+    {% if g.current_user.client_profile %}
+      {% assign page = params.page | default: 1 | plus: 0 %}
+      <a href="/client/projects/new">Create project</a>
+
+      {% query_graph 'client_projects', result_name: x, creator_id: me.id, per_page: 20, page: page %}
+
+
+
+      {% if x.projects.total_entries > 0 %}
+        <ul>
+          {% for project in x.projects.results %}
+            <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a> - <a href="/client/projects/delete/{{project.slug}}">delete</a></li>
+          {% endfor %}
+        </ul>
+        {% assign pages = g.projects.total_pages %}
+        {% assign current_page = g.projects.current_page %}
+        {% if pages > 1 %}
+          <div class="pager">
+            {% for page in (1..pages) %}
+              <a href="{{ current_full_path }}?page={{ page }}">{{ page }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        <p>You have not created any projects yet.</p>
+
+
+
+      {% endif %}
+    {% endif %}
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{
+  current_user {
+    id
+    slug
+    first_name
+    last_name
+    email
+    phone
+    mobile_number
+    client_profile: profile(profile_type: "client") {
+      id
+      approved
+      custom_address(name:"home_address"){
+        postcode
+        street
+        city
+        state
+      }
+    }
+    is_instance_admin
+  }
+}

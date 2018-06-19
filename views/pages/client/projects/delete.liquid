@@ -1,0 +1,32 @@
+---
+slug: client/projects/delete
+layout_name: application
+---
+
+<div class="container">
+  <div class="row">
+    <div style="height:150px">
+    <p><br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+
+    {% query_graph 'current_user', result_name: g %}
+{% query_graph 'get_project', result_name: graph_project, slug: params.slugs, creator_id: g.current_user.id %}
+
+{{graph_project}}
+
+
+{% if graph_project %}
+  <h1>Delete {{ graph_project.project.name }}</h1>
+  {% render_form 'destroy_project', resource_id: @graph_project.project.id %}
+
+{% else %}
+  <p>Unfortunately we could not find this project.
+{% endif %}
+
+
+
+</div>
+</div></div>

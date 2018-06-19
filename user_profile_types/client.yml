@@ -1,0 +1,4 @@
+name: client
+custom_attributes:
+- name: home_address
+  attribute_type: address

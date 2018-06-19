@@ -1,0 +1,73 @@
+---
+name: project
+resource: Transactable
+redirect_to: /account
+configuration:
+  name:
+    validation: { presence: true }
+  description:
+    validation:
+      presence: true
+  properties:
+    deadline:
+      validation:
+        presence: true
+    workplace_onsite:
+    workplace_online:
+    budget:
+      validation:
+        presence: true
+  custom_addresses:
+      project_address:
+        validation: { presence: true }
+        address:
+          validation: { presence: true }
+        city:
+          validation: {}
+        state:
+          validation: { presence: true }
+        street:
+          validation: {}
+        country:
+          validation: {}
+        postcode:
+          validation: {}
+---
+{% form %}
+  <label>Name:</label>
+  {% input_field 'name', class: "form-control" %}
+  <label>Description:</label>
+  {% input_field 'description', as: 'text', class: "form-control" %}
+
+  {% fields_for 'properties' %}
+    <label>
+    {% input_field 'workplace_online', as: 'boolean', form: 'properties' %} Workplace Online
+    </label>
+    <label>
+    {% input_field 'workplace_onsite', as: 'boolean', form: 'properties' %} Workplace Onsite
+    </label>
+    <label>Budget:</label>
+    {% input_field 'budget', form: 'properties', class: "form-control" %}
+    <label>Deadline:</label>
+    {% input_field 'deadline', form: 'properties', placeholder: 'YYYY-mm-dd', class: "form-control" %}
+  {% endfields_for %}
+
+  {% fields_for 'custom_addresses' %}
+
+      
+      {% fields_for 'project_address', form: 'custom_addresses' %}
+        <label>Address:</label>
+        {% input_field 'address', form: 'project_address', class: "form-control" %}
+        <label>Suburb:</label>
+        {% input_field 'city', form: 'project_address', class: "form-control" %}
+        <label>State:</label>        
+        {% input_field 'state', form: 'project_address', class: "form-control" %}
+        <label>Country:</label>
+        {% input_field 'country', form: 'project_address', class: "form-control" %}
+        <label>Postcode:</label>
+        {% input_field 'postcode', form: 'project_address', class: "form-control" %}
+      {% endfields_for %}
+    {% endfields_for %}
+  <br>
+  {% submit 'Save' class: "btn btn-primary" %}
+{% endform %}
